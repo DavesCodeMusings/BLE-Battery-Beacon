@@ -1,0 +1,56 @@
+# Sample Log Entries from ESPHome (with Comments)
+
+# ESPHome is polling the Battery Beacon, but is interrupted.
+# The Battery Beacon went into deep sleep before the battery level information was fetched.
+[12:56:35][D][esp32_ble_client:306]: [0] [1D:EC:AF:CO:FF:EE] Event 46
+[12:56:36][D][esp32_ble_client:110]: [0] [1D:EC:AF:CO:FF:EE] ESP_GATTC_SEARCH_CMPL_EVT
+[12:56:36][I][esp32_ble_client:227]: [0] [1D:EC:AF:CO:FF:EE] Connected
+[12:56:36][D][ble_client:058]: All clients established, services released
+[12:56:36][D][esp32_ble_client:188]: [0] [1D:EC:AF:CO:FF:EE] cfg_mtu status 0, mtu 242
+[12:57:29][D][esp32_ble_client:110]: [0] [1D:EC:AF:CO:FF:EE] ESP_GATTC_READ_CHAR_EVT
+[12:57:29][W][ble_sensor:078]: Error reading char at handle 12, status=133
+[12:57:29][D][esp32_ble_client:172]: [0] [1D:EC:AF:CO:FF:EE] ESP_GATTC_DISCONNECT_EVT, reason 8
+[12:57:29][D][esp32_ble_client:110]: [0] [1D:EC:AF:CO:FF:EE] ESP_GATTC_CLOSE_EVT
+[12:57:29][W][ble_sensor:037]: [ESP32DevkitV1 Battery Level] Disconnected!
+[12:57:29][D][sensor:094]: 'ESP32DevkitV1 Battery Level': Sending state nan % with 0 decimals of accuracy
+[12:58:24][W][ble_sensor:123]: [ESP32DevkitV1 Battery Level] Cannot poll, not connected
+
+# When the Battery Beacon awoke 2 minutes later, everything was copacetic.
+[12:59:23][D][esp32_ble_client:110]: [0] [1D:EC:AF:CO:FF:EE] Found device
+[12:59:23][D][esp32_ble_tracker:669]: Found device 1D:EC:AF:CO:FF:EE RSSI=-44
+[12:59:23][D][esp32_ble_tracker:690]:   Address Type: PUBLIC
+[12:59:23][D][esp32_ble_tracker:692]:   Name: 'ESP32DevkitV1'
+[12:59:23][D][esp32_ble_tracker:219]: Pausing scan to make connection...
+[12:59:23][D][esp32_ble_tracker:219]: Pausing scan to make connection...
+[12:59:23][I][esp32_ble_client:067]: [0] [1D:EC:AF:CO:FF:EE] 0x00 Attempting BLE connection
+[12:59:23][D][esp32_ble_client:110]: [0] [1D:EC:AF:CO:FF:EE] ESP_GATTC_CONNECT_EVT
+[12:59:23][D][esp32_ble_client:110]: [0] [1D:EC:AF:CO:FF:EE] ESP_GATTC_OPEN_EVT
+[12:59:23][I][ble_sensor:031]: [ESP32DevkitV1 Battery Level] Connected successfully!
+[12:59:23][D][esp32_ble_tracker:270]: Starting scan...
+[12:59:24][W][ble_sensor:123]: [ESP32DevkitV1 Battery Level] Cannot poll, not connected
+[12:59:35][D][esp32_ble_client:306]: [0] [1D:EC:AF:CO:FF:EE] Event 46
+[12:59:36][D][esp32_ble_client:110]: [0] [1D:EC:AF:CO:FF:EE] ESP_GATTC_SEARCH_CMPL_EVT
+[12:59:36][I][esp32_ble_client:227]: [0] [1D:EC:AF:CO:FF:EE] Connected
+[12:59:36][D][ble_client:058]: All clients established, services released
+[12:59:36][D][esp32_ble_client:188]: [0] [1D:EC:AF:CO:FF:EE] cfg_mtu status 0, mtu 242
+
+# ESPHome is trying to poll the Battery Beacon when it's in deep sleep, and fails.
+[13:10:24][W][ble_sensor:123]: [ESP32DevkitV1 Battery Level] Cannot poll, not connected
+
+# The Battery Beacon wakes up a minute later and polling is successful.
+[13:11:25][D][esp32_ble_client:110]: [0] [1D:EC:AF:CO:FF:EE] Found device
+[13:11:25][D][esp32_ble_tracker:669]: Found device 1D:EC:AF:CO:FF:EE RSSI=-41
+[13:11:25][D][esp32_ble_tracker:690]:   Address Type: PUBLIC
+[13:11:25][D][esp32_ble_tracker:692]:   Name: 'ESP32DevkitV1'
+[13:11:25][D][esp32_ble_tracker:219]: Pausing scan to make connection...
+[13:11:25][D][esp32_ble_tracker:219]: Pausing scan to make connection...
+[13:11:25][I][esp32_ble_client:067]: [0] [1D:EC:AF:CO:FF:EE] 0x00 Attempting BLE connection
+[13:11:26][D][esp32_ble_client:110]: [0] [1D:EC:AF:CO:FF:EE] ESP_GATTC_CONNECT_EVT
+[13:11:26][D][esp32_ble_client:110]: [0] [1D:EC:AF:CO:FF:EE] ESP_GATTC_OPEN_EVT
+[13:11:26][I][ble_sensor:031]: [ESP32DevkitV1 Battery Level] Connected successfully!
+[13:11:26][D][esp32_ble_tracker:270]: Starting scan...
+[13:11:38][D][esp32_ble_client:306]: [0] [1D:EC:AF:CO:FF:EE] Event 46
+[13:11:39][D][esp32_ble_client:110]: [0] [1D:EC:AF:CO:FF:EE] ESP_GATTC_SEARCH_CMPL_EVT
+[13:11:39][I][esp32_ble_client:227]: [0] [1D:EC:AF:CO:FF:EE] Connected
+[13:11:39][D][ble_client:058]: All clients established, services released
+[13:11:39][D][esp32_ble_client:188]: [0] [1D:EC:AF:CO:FF:EE] cfg_mtu status 0, mtu 242
