@@ -36,9 +36,7 @@ void IRAM_ATTR onTimer() {
 }
 
 // Declare Bluetooth service name, and characteristic for battery status.
-// All are standard GATT names that can be found here:
-// https://specificationrefs.bluetooth.com/assigned-values/16-bit%20UUID%20Numbers%20Document.pdf
-// https://www.bluetooth.com/xml-viewer/?src=https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.battery_level.xml
+// Reference: https://www.bluetooth.com/specifications/assigned-numbers/
 BLEService batteryService("180F");
 BLEUnsignedCharCharacteristic batteryLevelCharacteristic("2A19", BLERead); // 8-bit unsigned percent value 0 - 100, no decimal places.
 
