@@ -2,12 +2,13 @@ This project uses the venerable ESP32 Devkit V1 for both the BLE device and the 
 
 2 x ESP32 Devkit V1  https://www.amazon.com/s?k=ESP32+devkit+v1
 2 x USB A to Micro B cable https://www.amazon.com/s?k=USB+A+to+Micro+USB+cable
-1 x Arduino integrated development environment (IDE) https://www.arduino.cc/en/software
+1 x Arduino integrated development environment (IDE) v2.32 or better https://www.arduino.cc/en/software
 1 x ESP32 Board Library for Arduino https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html
 1 x Home Assistant installation https://www.home-assistant.io/
-1 x WiFi network
+1 x 2.4GHz WiFi network
 
-Important Note:
+Important Notes:
 The examples here use the 3.0.x board library for ESP32. Many examples on the web still refer to the 2.0.x version.
 esp_sleep_enable_timer_wakeup() and possibly other functions have changed between versions. Compilation will fail
-if you're not using the 3.0.x version. 
+if you're not using the 3.0.x version. I was able to start using the 3.0.x library immediately after installing
+the Arduino IDE. There were no extra steps, so it appears to be included with Arduino 2.32.
