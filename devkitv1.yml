@@ -1,0 +1,51 @@
+# ESPHome config for Bluetooth proxy to track device in Home Assistant.
+esphome:
+  name: devkitv1
+  friendly_name: DevkitV1
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "<redacted>"
+
+ota:
+  - platform: esphome
+    password: "<redacted>"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Devkitv1 Fallback Hotspot"
+    password: "<redacted>"
+
+captive_portal:
+
+bluetooth_proxy:
+  active: true
+
+esp32_ble_tracker:
+
+ble_client:
+  - mac_address: <redacted>
+    id: ESP32DevkitV1
+
+sensor:
+  - platform: ble_client
+    type: characteristic
+    ble_client_id: ESP32DevkitV1
+    name: "ESP32DevkitV1 Battery Level"
+    service_uuid: '180f'
+    characteristic_uuid: '2a19'
+    icon: 'mdi:battery'
+    unit_of_measurement: '%'
