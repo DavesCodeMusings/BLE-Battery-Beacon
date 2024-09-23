@@ -1,0 +1,7 @@
+This project uses the venerable ESP32 Devkit V1 for both the BLE device and the ESPHome Bluetooth proxy.
+
+2 x ESP32 Devkit V1  https://www.amazon.com/s?k=ESP32+devkit+v1
+2 x USB A to Micro B cable https://www.amazon.com/s?k=USB+A+to+Micro+USB+cable
+1 x Arduino integrated development environment (IDE) https://www.arduino.cc/en/software
+1 x Home Assistant installation https://www.home-assistant.io/
+1 x WiFi network
