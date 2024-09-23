@@ -17,9 +17,9 @@ Since I've already dismissed ESPHome and BLEHome as possible solutions, and I'm 
 
 ## What use case will this battery level indicator solve?
 The battery level beacon is a proof of concept. At this point, there's not even a battery to report the level of. It just returns 100% all the time. But, it should prove a few design points.
-* Test BLE device integration with Home Assistant.
+* Test do-it-yourself BLE device integration with Home Assistant.
 * Test ESP deep sleep for power conservation and self-heating mitigation.
-* Test Home Assistant's tollerance for an intermittently available device.
+* Test Home Assistant's tolerance for an intermittently available device.
 * Test the signal range for BLE devices that are outdoors.
 
 ## What's Next?
