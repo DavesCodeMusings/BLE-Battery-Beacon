@@ -37,7 +37,7 @@ bluetooth_proxy:
 esp32_ble_tracker:
 
 ble_client:
-  - mac_address: <redacted>
+  - mac_address: 1D:EC:AF:CO:FF:EE
     id: ESP32DevkitV1
 
 sensor:
