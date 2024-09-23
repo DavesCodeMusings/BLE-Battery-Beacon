@@ -3,7 +3,7 @@ This project uses the venerable ESP32 Devkit V1 for both the BLE device and the 
 2 x ESP32 Devkit V1  https://www.amazon.com/s?k=ESP32+devkit+v1
 2 x USB A to Micro B cable https://www.amazon.com/s?k=USB+A+to+Micro+USB+cable
 1 x Arduino integrated development environment (IDE) v2.32 or better https://www.arduino.cc/en/software
-1 x ESP32 Board Library for Arduino https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html
+1 x ESP32 3.0 Board Library from Espressif https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html
 1 x Home Assistant installation https://www.home-assistant.io/
 1 x 2.4GHz WiFi network
 
