@@ -21,7 +21,7 @@
  */
 
 #define OPERATING_TIME_SECS 60
-#define SLEEPING_TIME_SECS 240
+#define SLEEPING_TIME_SECS 120
 #define LED_BUILTIN 2
 #include <ArduinoBLE.h>
 
