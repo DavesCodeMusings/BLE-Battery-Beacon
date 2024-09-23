@@ -4,7 +4,7 @@ This Arduino sketch shows how to set up a generic ESP32 as a Bluetooth Low Energ
 ## Why?
 I've been setting up Home Assistant with various devices around the house and I can see myself eventually wanting to communicate with sensors that are outdoors. I have a handful of ESP32s and a 3D printer. I'm ready to build some stuff.
 
-Just use [ESPHome](esphome.io), you say! I do. I've got Bluetooth Proxy running on an ESP32. But that's inside the house. I'm not thrilled with the idea of having a device with my WiFi credentials on it that's not physically secured inside my home.
+Just use [ESPHome](esphome.io), you say! It's easy! I do. I've got Bluetooth Proxy running on an ESP32 flashed with ESPHome. But that's inside the house. I'm not thrilled with the idea of having a device with my WiFi credentials on it that's not physically secured inside my home.
 
 Use [BLEHome](https://bthome.io/) then! No WiFi required! Sure. That Bluetooth Proxy I have running on ESPHome is reporting temperature and humidity from Xaiomi sensors flashed with BLEHome firmware. It's fabulous... until I have to replace batteries. And the Xaiomi devices aren't built to stand up to the elements.
 
