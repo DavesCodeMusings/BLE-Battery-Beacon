@@ -36,6 +36,14 @@ bluetooth_proxy:
 
 esp32_ble_tracker:
 
+# Simple detection. Device is advertising or not. Shown as home or away.
+binary_sensor:
+  - platform: ble_presence
+    device_class: presence
+    mac_address: 1D:EC:AF:CO:FF:EE
+    name: ESP32DevkitV1
+
+# Read a device characteristic. In this case, battery level.
 ble_client:
   - mac_address: 1D:EC:AF:CO:FF:EE
     id: ESP32DevkitV1
