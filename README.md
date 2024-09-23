@@ -1,7 +1,7 @@
 # BLE Battery Level Beacon
 This Arduino sketch shows how to set up a generic ESP32 as a Bluetooth Low Energy (BLE) beacon with deep sleep capability. All it does is announce itself and offer to communicate a fictitious battery level characteristic. As configured, it will stay up and accept connections for one minute. After that, it goes into deep sleep for four minutes, wakes up, and repeats. Sleep and wake times are easily configurable with #define statements at the top of the code.
 
-See the [Bill of Materials](Bill_Of_Materials.txt) for the parts and software libraries required.
+See the [Bill of Materials](Bill_Of_Materials.txt) for the parts and software required.
 
 ## Why?
 I've been setting up Home Assistant with various devices around the house and I can see myself eventually wanting to communicate with sensors that are outdoors. I have a handful of ESP32s and a 3D printer. I'm ready to build some stuff.
