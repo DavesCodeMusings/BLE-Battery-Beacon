@@ -8,15 +8,15 @@ I've been setting up Home Assistant with various devices around the house and I 
 
 Just use [ESPHome](esphome.io), you say! It's easy!
 
-I do. I've got Bluetooth Proxy running on an ESP32 flashed with ESPHome. But that's inside the house. I'm not thrilled with the idea of having a device with my WiFi credentials on it that's not physically secured inside my home.
+I do. I've got Bluetooth Proxy running on an ESP32 flashed with ESPHome. But that's inside the house. I'm not thrilled with the idea of having my WiFi credentials on a device that's not physically secured inside my home.
 
 Use [BLEHome](https://bthome.io/) then! No WiFi required!
 
 Sure. That Bluetooth Proxy I have running on ESPHome is reporting temperature and humidity from Xaiomi sensors flashed with BLEHome firmware. It's fabulous... until I have to replace batteries. And the Xaiomi devices aren't built to stand up to the elements.
 
 ## What do I want?
-Since I've already dismissed ESPHome and BLEHome as possible solutions, and I'm ready to DIY, what exactly is it I'm looking for? Let's start with the requirements.
-* I want a rugged device I can plug into AC outlets on my front and back porch so I don't have to constantly toss CR2032 coin cells in the landfill.
+Since I've already dismissed ESPHome and BLEHome as possible solutions, I'm ready to DIY. So what exactly is it I'm looking for? Let's start with the requirements.
+* I want a rugged device I can plug into AC outlets on my front and back porch so I don't have to constantly toss CR2032 coin cells in the bin.
 * I want it to be cheap in case it gets chewed on by squirrels, run over by a lawn mower, or pooped on by birds.
 * I don't want my WiFi credentials on it in case it gets stolen by a roving gang of juvenile hacker wannabes.
 * I want to be able to outfit it with sensors that will stand up to the extremes of Wisconsin winters.
