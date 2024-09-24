@@ -34,3 +34,17 @@ First in my plans is an outdoor temperature & humidity sensor. There are easily 
 The next project will probably be a vehicle presence detector using an ESP32 with a rechargable Lithium Polymer battery plugged into the car. The LiPo battery will charge when the car is running, but how long will it last if the car is parked? How will it hold up in the summer heat and winter cold?
 
 But first, the proof of concept battery indicator.
+
+## First Try
+[proof_of_concept.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept.ino) is the initial attempt to solve the problem by offering the battery level as a Generic Attribute (GATT) characteristic. [devkitv1.yml](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/devkitv1.yml) is the ESPHome configuration for the device.
+
+It works well when the beacon first boots up. ESPHome finds the beacon in its scans and reads the battery level (a fictitious 100%). Home Assistant show this battery level as an entity. So far, so good.
+
+Then the deep sleep kicks in, and it all falls apart.
+
+The Arduino sketch in proof_of_concept.ino is configured so that it indiscriminantly goes into deep sleep after 60 seconds. If ESPHome is trying to read battery level at 59 seconds, too bad. It goes to sleep and disconnects ESPHome mid-request. If ESPHome tries to reconnect, the beacon is sleeping, so it never responds. ESPHome then sets the battery level to NaN (not a number.) Home Assistant interprets this as unknown. Since teh beacon is configured to spend more time asleep than awake, it causes a lot of "unknown" messages.
+
+Interestingly, the Home Assistant "presence" of the beacon remains contantly in a "Home" state, rather than "Away", even though it's sleeping for the majority of the time.
+
+## Second Try
+[proof_of_concept_2.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_2.ino) is an attempt to fix the problem of the battery always showing "unknown".
