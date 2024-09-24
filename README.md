@@ -47,4 +47,4 @@ The Arduino sketch in proof_of_concept.ino is configured so that it indiscrimina
 Interestingly, the Home Assistant "presence" of the beacon remains contantly in a "Home" state, rather than "Away", even though it's sleeping for the majority of the time.
 
 ## Second Try
-[proof_of_concept_2.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_2.ino) is an attempt to fix the problem of the battery always showing "unknown".
+[proof_of_concept_2.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_2.ino) is an attempt to fix the problem of the battery constantly showing "unknown".
