@@ -28,18 +28,11 @@
 // Used for microsecond delay calculations.
 const uint64_t uS_in_Sec = 1000000;
 
-// Configure an interrupt timer for tracking time until deep sleep.
+// Configure an interrupt timer for tracking time until disconnect or deep sleep.
 hw_timer_t *timer = NULL;
 volatile int sleepCountdown = OPERATING_TIME_SECS;
 void IRAM_ATTR onTimer() {
   sleepCountdown--;
-  if (sleepCountdown <= 0) {
-    Serial.print("Entering deep sleep. Countdown to wake-up: ");
-    Serial.println(SLEEPING_TIME_SECS);
-    Serial.flush();
-    esp_sleep_enable_timer_wakeup((uint64_t) SLEEPING_TIME_SECS * uS_in_Sec);
-    esp_deep_sleep_start();
-  }
 }
 
 // Declare Bluetooth service name, and characteristic for battery status.
@@ -124,10 +117,23 @@ void loop() {
 
       // Delay between updates. (Don't make too long or connections start to timeout.)
       delay(500);
+      if (sleepCountdown <= 0) {
+        Serial.println("Forcing disconnect after time limit.");
+        BLE.disconnect();
+      }
     }
 
     // Turn off LED when connection is dropped. 
     digitalWrite(LED_BUILTIN, LOW);
     Serial.println("Connection terminated.");
+  }
+
+  // Deep sleep saves power and helps mitigate self-heating sensors.
+  if (sleepCountdown <= 0) {
+    Serial.print("Entering deep sleep. Countdown to wake-up: ");
+    Serial.println(SLEEPING_TIME_SECS);
+    Serial.flush();
+    esp_sleep_enable_timer_wakeup((uint64_t) SLEEPING_TIME_SECS * uS_in_Sec);
+    esp_deep_sleep_start();
   }
 }
