@@ -48,3 +48,22 @@ Interestingly, the Home Assistant "presence" of the beacon remains contantly in 
 
 ## Second Try
 [proof_of_concept_2.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_2.ino) is an attempt to fix the problem of the battery constantly showing "unknown".
+
+I remember reading about how some battery-operated home automation devices would send sensor readings in their BLE advertising messages. (I think it was a write-up concerning the stock firmware on the Xaiomi Mijia temperature / humidity sensors I have.) And, the BLE advertisement is what ESPHome was using for presence detection. This was the one entity in Home Asistant that was not showing "unknown" when the beacon went to sleep.
+
+This led me to looking for a way to communicate battery level information in the BLE advertisement. And it turns out there is a field called "manufacturer data" that device makers like Xaiomi use to send temperature and humidity readings along with their BLE advertisements. Unfortunately, there's no standard way of doing it. But, Arduino's BLE library has a function for writing to this "manufacturer data field.
+
+So in proof_of_concept_2.ino, I've created a string of ASCII characters that spells out "BATT:100%" and stuck it in the manufacturer data field. Using a [BLE scanner](https://play.google.com/store/search?q=nrf+connect&c=apps) on my phone, I can see the advertisement from my beacon. And if I switch it to a text representation of the manufacturer data, I see "BATT:100%". Problem solved! Right...?
+
+Maybe not. How can I read this from ESPHome to send to Home Assistant as an entity?
+
+It's technically possible, but probably involves a lambda function to dig into some debug info. In short, it's not the simple solution I was hoping for.
+
+## Third Try
+In looking for examples of sending sensor readings in the beacon's BLE advertisement, I stumbled upon the specification for [the format used by BLEHome](https://bthome.io/format/). This project has already laid out their way of sending measurements in a BLE advertisement. So rather than creating my own, or trying to reverse-engineer some proprietary format like what's used by Xaiomi, I'll re-write my sketch to conform to BLEHome's "manufacturer data" format.
+
+It looks like the BLEHome data format can be done using the funtions provided by the Arduino library, though I have yet to find any example code for that. But, as the band Panic at the Disco says, "I've got high hopes!"
+
+The advantage of this should be easy integration with ESPHome and Home Assistant. My Xaiomi Mijia devices are already flashed with a 3rd party firmware that uses BLEHome (at least that's how they show up in Home Assistant.) And they "just work". No lambda functions, etc. I'm hoping to have the same results when I'm done.
+
+Watch this space for an Arduino sketch sending BLEHome data.
