@@ -104,8 +104,8 @@ void loop() {
       // batteryLevelCharacteristic.writeValue(<batteryPercent>);
       // where <batteryPercent> is an unsigned char value between 0 and 100.
 
-      // Delay between updates. (Don't make too long or connections start to timeout.)
-      delay(1000);
+      delay(100);  // Throttle updates, balancing reponsiveness vs. CPU usage.
+      
       if (sleepCountdown <= 0) {
         Serial.print("Sleeping for: ");
         Serial.println(SLEEPING_TIME_SECS);
