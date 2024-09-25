@@ -72,3 +72,4 @@ It turns out BLEHome sends its data in the "service data" part of the advertisem
 
 Fortunately, it's not too difficult to set up using the esp32_ble_tracker's [on_ble_manufacturer_data_advertise](https://esphome.io/components/esp32_ble_tracker.html#on-ble-manufacturer-data-advertise-trigger) trigger. I was able to pretty easily create an ESPHome configuration to send a mock value of 100% battery level to Home Assistant.
 
+[esphome_config_3.yml](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/esphome_config_3.yml) contains this configuration.
