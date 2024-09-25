@@ -77,6 +77,6 @@ Fortunately, it's not too difficult to set up using the esp32_ble_tracker's [on_
 [esphome_config_3.yml](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/esphome_config_3.yml) contains this configuration.
 
 ## Fourth Try
-With [proof_of_concept_4.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_4.ino), I created a battery variable that is decremented once a second by the timer interrupt. This is to simulate a draining battery instead of the constant 100% I was sending before. I also changed it to dynamically update the _manufacturer data_ part of the advertisement. And best of all, everything is showing up in nRFconnect just like I expected.
+With [proof_of_concept_4.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_4.ino), I created a battery variable that is decremented once a second by the timer interrupt. This is to simulate a draining battery instead of the constant 100% I was sending before. I also changed it to dynamically update the _manufacturer data_ part of the advertisement. And best of all, the changing battery percentage is showing up in nRF Connect just like I expected.
 
 But ESPHome is still configured to send mock data of 100% all the time, so Home Assistant still reports 100%. My next task is to decode the data from the ESP32 beacon's advertisement and use it to update the Home Assistant entity.
