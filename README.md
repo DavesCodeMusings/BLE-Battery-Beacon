@@ -66,7 +66,7 @@ It looks like the BTHome data format can be done using the funtions provided by 
 
 The advantage of this should be easy integration with ESPHome and Home Assistant. My Xaiomi Mijia devices are already flashed with a 3rd party firmware that uses BTHome (at least that's how they show up in Home Assistant.) And they "just work". No lambda functions, etc. I'm hoping to have the same results when I'm done.
 
-Oops! That didn't work. Remeber that scene in Star Wars when they're escaping the Death Star in the Millenium Falcon and Han says, "I sure hope the old man got that tractor beam out of comission or this is going to be a really short trip." Well guess what...?
+_Oops! That didn't work._ Remeber that scene in Star Wars when they're escaping the Death Star in the Millenium Falcon and Han says, "I sure hope the old man got that tractor beam out of commission or this is going to be a real short trip." Well guess what...?
 
 It turns out BTHome sends its data in the "service data" part of the advertisement, not the "manufacturer data". Why does this matter? Because the Arduino BLE library can write to "manufacturer data", but I could not find any functions that would write arbitrary "service data". So it's back to ESPHome lambda functions.
 
