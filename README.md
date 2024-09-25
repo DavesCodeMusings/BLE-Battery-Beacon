@@ -36,24 +36,24 @@ The next project will probably be a vehicle presence detector using an ESP32 wit
 But first, the proof of concept battery indicator.
 
 ## First Try
-[proof_of_concept.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept.ino) is the initial attempt to solve the problem by offering the battery level as a Generic Attribute (GATT) characteristic. [esphome_config.yml](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/esphome_config.yml) is the ESPHome configuration for the device.
+I created [proof_of_concept.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept.ino) as an initial attempt to solve the problem by offering the battery level as a Generic Attribute (GATT) characteristic. [esphome_config.yml](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/esphome_config.yml) is the corresponding ESPHome configuration linking the device to Home Assistant. It works well when the beacon first boots up. ESPHome finds the beacon in its scans and reads the battery level (a fictitious 100%). Home Assistant show this battery level as an entity.
 
-It works well when the beacon first boots up. ESPHome finds the beacon in its scans and reads the battery level (a fictitious 100%). Home Assistant show this battery level as an entity. So far, so good.
+So far, so good.
 
 Then the deep sleep kicks in, and it all falls apart.
 
-The Arduino sketch in proof_of_concept.ino is configured so that it indiscriminantly goes into deep sleep after 60 seconds. If ESPHome is trying to read battery level at 59 seconds, too bad. It goes to sleep and disconnects ESPHome mid-request. If ESPHome tries to reconnect, the beacon is sleeping, so it never responds. ESPHome then sets the battery level to NaN (not a number.) Home Assistant interprets this as unknown. Since teh beacon is configured to spend more time asleep than awake, it causes a lot of "unknown" messages.
+The Arduino sketch in this first froof of concept is configured so that the ESP32 indiscriminantly goes into deep sleep after 60 seconds. If ESPHome is trying to read battery level at 59 seconds, too bad. It goes to sleep and disconnects ESPHome mid-request. If ESPHome tries to reconnect, the beacon is sleeping, so it never responds. ESPHome then sets the battery level to NaN (not a number.) Home Assistant interprets this as _unknown_. And since the beacon is configured to spend more time asleep than awake, it causes a lot of _unknown_ messages.
 
-Interestingly, the Home Assistant "presence" of the beacon remains contantly in a "Home" state, rather than "Away", even though it's sleeping for the majority of the time.
+Interestingly, the Home Assistant _presence_ of the beacon remains contantly in a _Home_ state, rather than _Away_, even though the ESP32 is sleeping for the majority of the time.
 
 ## Second Try
-[proof_of_concept_2.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_2.ino) is an attempt to fix the problem of the battery constantly showing "unknown".
+[proof_of_concept_2.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_2.ino) is an attempt to fix the problem of the battery constantly showing _unknown_.
 
-I remember reading about how some battery-operated home automation devices would send sensor readings in their BLE advertising messages. (I think it was a write-up concerning the stock firmware on the Xaiomi Mijia temperature / humidity sensors I have.) And, the BLE advertisement is what ESPHome was using for presence detection. This was the one entity in Home Asistant that was not showing "unknown" when the beacon went to sleep.
+I remember reading about how some battery-operated home automation devices will send sensor readings in their BLE advertising messages. (I think it was a write-up concerning the stock firmware on the Xaiomi Mijia temperature / humidity sensors I have.) And, the BLE advertisement is what ESPHome was using for presence detection. This was the one entity in Home Asistant that was not showing _unknown_ when the beacon went to sleep.
 
-This led me to looking for a way to communicate battery level information in the BLE advertisement. And it turns out there is a field called "manufacturer data" that device makers like Xaiomi use to send temperature and humidity readings along with their BLE advertisements. Unfortunately, there's no standard way of doing it. But, Arduino's BLE library has a function for writing to this "manufacturer data field.
+This led me to looking for a way to communicate battery level information in the BLE advertisement. And it turns out there is a field called _manufacturer data_ that device makers (like Xaiomi) will use to send temperature and humidity readings along with their BLE advertisements. Unfortunately, there's no standard way of doing it. But, Arduino's BLE library has a function for writing to this _manufacturer data_ field.
 
-So in proof_of_concept_2.ino, I've created a string of ASCII characters that spells out "BATT:100%" and stuck it in the manufacturer data field. Using a [BLE scanner](https://play.google.com/store/search?q=nrf+connect&c=apps) on my phone, I can see the advertisement from my beacon. And if I switch it to a text representation of the manufacturer data, I see "BATT:100%". Problem solved! Right...?
+So in proof_of_concept_2.ino, I've created a string of ASCII characters that spells out _BATT:100%_ and stuck it in the manufacturer data field. Using a [BLE scanner](https://play.google.com/store/search?q=nrf+connect&c=apps) on my phone, I can see the advertisement from my ESP32 beacon. And if I switch it to a text representation of the manufacturer data, I see _BATT:100%_. Problem solved! Right...?
 
 Maybe not. How can I read this from ESPHome to send to Home Assistant as an entity?
 
@@ -64,12 +64,19 @@ In looking for examples of sending sensor readings in the beacon's BLE advertise
 
 It looks like the BTHome data format can be done using the funtions provided by the Arduino library, though I have yet to find any example code for that. But, as the band Panic at the Disco says, "I've got high hopes!"
 
-The advantage of this should be easy integration with ESPHome and Home Assistant. My Xaiomi Mijia devices are already flashed with a 3rd party firmware that uses BTHome (at least that's how they show up in Home Assistant.) And they "just work". No lambda functions, etc. I'm hoping to have the same results when I'm done.
+The advantage of this should be easy integration with ESPHome and Home Assistant. My Xaiomi Mijia devices are already flashed with a 3rd party firmware that uses BTHome (at least that's how they show up in Home Assistant.) And they _just work_. No lambda functions, etc. I'm hoping to have the same results when I'm done.
 
-_Oops! That didn't work._ Remeber that scene in Star Wars when they're escaping the Death Star in the Millenium Falcon and Han says, "I sure hope the old man got that tractor beam out of commission or this is going to be a real short trip." Well guess what...?
+Oops! That didn't work.
 
-It turns out BTHome sends its data in the "service data" part of the advertisement, not the "manufacturer data". Why does this matter? Because the Arduino BLE library can write to "manufacturer data", but I could not find any functions that would write arbitrary "service data". So it's back to ESPHome lambda functions.
+Remember that scene in Star Wars when they're escaping the Death Star in the Millenium Falcon and Han says, "I sure hope the old man got that tractor beam out of commission or this is going to be a real short trip." Well guess what...?
+
+It turns out BTHome sends its sensor updates in the _service data_ part of the advertisement, not the _manufacturer data_. Maybe the stock Xiaomi firmware was doing this too. I don't know. Why does it matter? Because the Arduino BLE library can write to _manufacturer data_, but I could not find any functions that would write arbitrary _service data_. So it's back to ESPHome lambda functions.
 
 Fortunately, it's not too difficult to set up using the esp32_ble_tracker's [on_ble_manufacturer_data_advertise](https://esphome.io/components/esp32_ble_tracker.html#on-ble-manufacturer-data-advertise-trigger) trigger. I was able to pretty easily create an ESPHome configuration to send a mock value of 100% battery level to Home Assistant.
 
 [esphome_config_3.yml](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/esphome_config_3.yml) contains this configuration.
+
+## Fourth Try
+With [proof_of_concept_4.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_4.ino), I created a battery variable that is decremented once a second by the timer interrupt. This is to simulate a draining battery instead of the constant 100% I was sending before. I also changed it to dynamically update the _manufacturer data_ part of the advertisement. And best of all, everything is showing up in nRFconnect just like I expected.
+
+But ESPHome is still configured to send mock data of 100% all the time, so Home Assistant still reports 100%. My next task is to decode the data from the ESP32 beacon's advertisement and use it to update the Home Assistant entity.
