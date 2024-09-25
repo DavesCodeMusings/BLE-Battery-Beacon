@@ -60,7 +60,7 @@ Maybe not. How can I read this from ESPHome to send to Home Assistant as an enti
 It's technically possible, but probably involves a lambda function to dig into some debug info. In short, it's not the simple solution I was hoping for.
 
 ## Third Try
-In looking for examples of sending sensor readings in the beacon's BLE advertisement, I stumbled upon the specification for [the format used by BTHome](https://bthome.io/format/). This project has already laid out their way of sending measurements in a BLE advertisement. So rather than creating my own, or trying to reverse-engineer some proprietary format like what's used by Xaiomi, I'll re-write my sketch to conform to BTHome's "manufacturer data" format.
+In looking for examples of sending sensor readings in the beacon's BLE advertisement, I stumbled upon the specification for [the format used by BTHome](https://bthome.io/format/). This project has already laid out their way of sending measurements in a BLE advertisement. So rather than creating my own, or trying to reverse-engineer some proprietary format like what's used by Xaiomi, I'll re-write my sketch to conform to BTHome's data format.
 
 It looks like the BTHome data format can be done using the funtions provided by the Arduino library, though I have yet to find any example code for that. But, as the band Panic at the Disco says, "I've got high hopes!"
 
