@@ -10,12 +10,12 @@ Just use [ESPHome](esphome.io), you say! It's easy!
 
 I do. I've got Bluetooth Proxy running on an ESP32 flashed with ESPHome. But that's inside the house. I'm not thrilled with the idea of having my WiFi credentials on a device that's not physically secured inside my home.
 
-Use a [BLEHome](https://bthome.io/) device! No WiFi required!
+Use a [BTHome](https://bthome.io/) device! No WiFi required!
 
-Sure. That Bluetooth Proxy I have running on ESPHome is reporting temperature and humidity from Xaiomi sensors flashed with BLEHome firmware. It's fabulous... until I have to replace batteries. And the Xaiomi devices aren't built to stand up to the elements.
+Sure. That Bluetooth Proxy I have running on ESPHome is reporting temperature and humidity from Xaiomi sensors flashed with BTHome firmware. It's fabulous... until I have to replace batteries. And the Xaiomi devices aren't built to stand up to the elements.
 
 ## What do I want?
-Since I've already dismissed ESPHome and BLEHome as possible solutions, I'm ready to DIY. So what exactly is it I'm looking for? Let's start with the requirements.
+Since I've already dismissed ESPHome and BTHome as possible solutions, I'm ready to DIY. So what exactly is it I'm looking for? Let's start with the requirements.
 * I want a device I can plug into AC outlets on my front and back porch so I don't have to constantly toss CR2032 coin cells in the bin.
 * I want it to be cheap in case it gets chewed on by squirrels, run over by a lawn mower, or pooped on by birds.
 * I don't want my WiFi credentials on it in case it gets stolen by a roving gang of juvenile hacker wannabes.
@@ -60,15 +60,15 @@ Maybe not. How can I read this from ESPHome to send to Home Assistant as an enti
 It's technically possible, but probably involves a lambda function to dig into some debug info. In short, it's not the simple solution I was hoping for.
 
 ## Third Try
-In looking for examples of sending sensor readings in the beacon's BLE advertisement, I stumbled upon the specification for [the format used by BLEHome](https://bthome.io/format/). This project has already laid out their way of sending measurements in a BLE advertisement. So rather than creating my own, or trying to reverse-engineer some proprietary format like what's used by Xaiomi, I'll re-write my sketch to conform to BLEHome's "manufacturer data" format.
+In looking for examples of sending sensor readings in the beacon's BLE advertisement, I stumbled upon the specification for [the format used by BTHome](https://bthome.io/format/). This project has already laid out their way of sending measurements in a BLE advertisement. So rather than creating my own, or trying to reverse-engineer some proprietary format like what's used by Xaiomi, I'll re-write my sketch to conform to BTHome's "manufacturer data" format.
 
-It looks like the BLEHome data format can be done using the funtions provided by the Arduino library, though I have yet to find any example code for that. But, as the band Panic at the Disco says, "I've got high hopes!"
+It looks like the BTHome data format can be done using the funtions provided by the Arduino library, though I have yet to find any example code for that. But, as the band Panic at the Disco says, "I've got high hopes!"
 
-The advantage of this should be easy integration with ESPHome and Home Assistant. My Xaiomi Mijia devices are already flashed with a 3rd party firmware that uses BLEHome (at least that's how they show up in Home Assistant.) And they "just work". No lambda functions, etc. I'm hoping to have the same results when I'm done.
+The advantage of this should be easy integration with ESPHome and Home Assistant. My Xaiomi Mijia devices are already flashed with a 3rd party firmware that uses BTHome (at least that's how they show up in Home Assistant.) And they "just work". No lambda functions, etc. I'm hoping to have the same results when I'm done.
 
 Oops! That didn't work. Remeber that scene in Star Wars when they're escaping the Death Star in the Millenium Falcon and Han says, "I sure hope the old man got that tractor beam out of comission or this is going to be a really short trip." Well guess what...?
 
-It turns out BLEHome sends its data in the "service data" part of the advertisement, not the "manufacturer data". Why does this matter? Because the Arduino BLE library can write to "manufacturer data", but I could not find any functions that would write arbitrary "service data". So it's back to ESPHome lambda functions.
+It turns out BTHome sends its data in the "service data" part of the advertisement, not the "manufacturer data". Why does this matter? Because the Arduino BLE library can write to "manufacturer data", but I could not find any functions that would write arbitrary "service data". So it's back to ESPHome lambda functions.
 
 Fortunately, it's not too difficult to set up using the esp32_ble_tracker's [on_ble_manufacturer_data_advertise](https://esphome.io/components/esp32_ble_tracker.html#on-ble-manufacturer-data-advertise-trigger) trigger. I was able to pretty easily create an ESPHome configuration to send a mock value of 100% battery level to Home Assistant.
 
