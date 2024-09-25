@@ -28,22 +28,21 @@
 // Used for microsecond calculations.
 const uint64_t uS_in_Sec = 1000000;
 
-// Configure an interrupt timer for tracking time until disconnect or deep sleep.
+// Interrupt timer used for tracking seconds until disconnect or deep sleep.
 hw_timer_t *timer = NULL;
 volatile int sleepCountdown = OPERATING_TIME_SECS;
 void IRAM_ATTR onTimer() {
   sleepCountdown--;
 }
 
-// Declare Bluetooth service name, and characteristic for battery status.
+// Bluetooth service name and characteristic for communicating battery status.
 // Reference: https://www.bluetooth.com/specifications/assigned-numbers/
 BLEService batteryService("180F");
 BLEUnsignedCharCharacteristic batteryLevelCharacteristic("2A19", BLERead); // 8-bit unsigned percent value 0 - 100, no decimal places.
 
-// Configure Bluetooth and serial debugging.
 void setup() {
 
-  // Blink LED to indicate startup and leave it on. 
+  // Blink LED to indicate device is starting and leave it on while initializing.
   pinMode(LED_BUILTIN, OUTPUT);
   for (int i=0; i<3; i++) {
     digitalWrite(LED_BUILTIN, LOW);
@@ -52,22 +51,27 @@ void setup() {
     delay(250);
   }
 
-  // Initialize serial for debug output.
   Serial.begin(9600);
-
-  // Initialize Bluetooth communication.
   Serial.println("Initializing Bluetooth communication.");
   if (!BLE.begin()) {
     Serial.println("Failed.");
-    while (1); // Loop forever. This has the effect of leaving the LED on, indicating a failure.
+    while (1) { // Slow blink forever, indicating a failure.
+      for (int i=0; i<3; i++) {
+        digitalWrite(LED_BUILTIN, LOW);
+        delay(1000);
+        digitalWrite(LED_BUILTIN, HIGH);
+        delay(1000);
+      }
+      digitalWrite(LED_BUILTIN, LOW);
+      delay(3000);
+    }
   }
+  Serial.print("Bluetooth MAC: ");
+  Serial.println(BLE.address());
 
-  // Set up Bluetooth service.
   Serial.println("Setting up battery service with characteristic for battery level.");
   BLE.setLocalName("ESP32DevkitV1");
   BLE.setAdvertisedService(batteryService);
-
-  // Add battery level characteristic.
   batteryService.addCharacteristic(batteryLevelCharacteristic);
   batteryLevelCharacteristic.writeValue(100); // Make it 100% since it's wall powered.
 
@@ -78,13 +82,12 @@ void setup() {
   byte data[11] = { 0xA3, 0x09, 0x42, 0x41, 0x54, 0x54, 0x3A, 0x31, 0x30, 0x30, 0x25};
   BLE.setManufacturerData(data, 11);
 
-  // Make the service available.
   Serial.println("Advertising services.");
   BLE.addService(batteryService);
   BLE.setConnectable(true);
   BLE.advertise();
 
-  // Start deep sleep timer to help mitigate self-heating of attached sensors.
+  // Occasional deep sleep helps mitigate self-heating of any attached sensors.
   Serial.print("Countdown to deep sleep: ");
   Serial.println(OPERATING_TIME_SECS);
   timer = timerBegin(uS_in_Sec);  // Freq needs to match timerAlarm() below to be in units of seconds.
@@ -97,12 +100,10 @@ void setup() {
 
 void loop() {
 
-  // Wait for a connection from a central.
-  BLEDevice central = BLE.central();
+  BLEDevice central = BLE.central();  // Poll for client connection.
 
-  // When a connection is made, activate LED and write address to serial for debug.
   if (central) {
-    sleepCountdown = OPERATING_TIME_SECS;
+    sleepCountdown = OPERATING_TIME_SECS;  // Give client maximum time allowed.
     Serial.print("Countdown to deep sleep was reset: ");
     Serial.println(OPERATING_TIME_SECS);
     digitalWrite(LED_BUILTIN, HIGH);
@@ -128,7 +129,6 @@ void loop() {
     Serial.println("Connection terminated.");
   }
 
-  // Deep sleep saves power and helps mitigate self-heating of sensors.
   if (sleepCountdown <= 0) {
     Serial.print("Entering deep sleep. Countdown to wake-up: ");
     Serial.println(SLEEPING_TIME_SECS);
