@@ -40,5 +40,5 @@ esp32_ble_tracker:
 binary_sensor:
   - platform: ble_presence
     device_class: presence
-    mac_address: 1D:EC:AF:CO:FF:EE
+    mac_address: 1D:EC:AF:C0:FF:EE
     name: ESP32DevkitV1
