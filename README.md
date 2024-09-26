@@ -85,4 +85,7 @@ It did not take long to realize I've made things difficult by storing the batter
 
 And while I'm thinking about code changes, about half the lines in my C program are for dealing with client connections. Since a true beacon broadcasts it's data as part of the advertisement (and I've already determined Home Assistant does not deal well with the deep sleep disconnects when reading client data) there's really no need for my program to include code for client connections at all.
 
-So in the end, my fourth try is a bit of clean-up.
+So in the end, my fourth try has told me it's time for a bit of clean-up.
+
+## Fifth Try
+[proof_of_concept_5.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_5.ino) really streamlines the code. And, I can still monitor the fictious battery level with nRF Connect. It's just a descending hex value instead of a more human-friendly string. But, that makes my ESPHome lambda function simpler and the task of getting data to Home Assistant easier.
