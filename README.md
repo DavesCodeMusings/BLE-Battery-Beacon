@@ -90,13 +90,13 @@ So in the end, my fourth try has told me it's time for a bit of clean-up.
 ## Fifth Try
 [proof_of_concept_5.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_5.ino) really streamlines the code. And, I can still monitor the fictious battery level with nRF Connect. It's just a descending hex value instead of a more human-friendly string. But, that makes my ESPHome lambda function simpler and the task of getting data to Home Assistant easier.
 
-The lambda function went from this...
+The lambda function went from this mock-up...
 
 ```
 id(esp32devkit1_battery).publish_state(100);
 ```
 
-To this...
+To this working sensor...
 
 ```
 id(esp32devkit1_battery).publish_state(x[0]);
