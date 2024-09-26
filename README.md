@@ -23,7 +23,7 @@ Since I've already dismissed ESPHome and BTHome as possible solutions, I'm ready
 
 ## What use case will this battery level indicator solve?
 The battery level beacon is a proof of concept. At this point, there's not even a battery to report the level of. It just returns a mocked-up value. But, it should prove a few design points.
-* Test do-it-yourself BLE device integration with Home Assistant.
+* Test a do-it-yourself ArduinoBLE ESP32 device integration with Home Assistant.
 * Test ESP deep sleep for power conservation and self-heating mitigation.
 * Test Home Assistant's tolerance for an intermittently available device.
 * Test the signal range for BLE devices that are outdoors.
