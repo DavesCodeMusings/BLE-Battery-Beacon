@@ -8,7 +8,7 @@ I've been setting up Home Assistant with various devices around the house and I 
 
 Just use [ESPHome](esphome.io), you say! It's easy!
 
-I do. I've got Bluetooth Proxy running on an ESP32 flashed with ESPHome. But that's inside the house. I'm not thrilled with the idea of having my WiFi credentials on some DHT22-equipped DIY device that's not physically secured inside my home.
+I do. I've got Bluetooth Proxy running on an ESP32 flashed with ESPHome. But that's inside the house. I'm not thrilled with the idea of having my WiFi credentials stored on some DHT22-equipped DIY device that's not physically secured inside my home.
 
 Use a [BTHome](https://bthome.io/) device! No WiFi required!
 
