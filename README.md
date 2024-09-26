@@ -16,7 +16,7 @@ Sure. That Bluetooth Proxy I have running on ESPHome is reporting temperature an
 
 ## What do I want?
 Since I've already dismissed ESPHome and BTHome as possible solutions, I'm ready to DIY. So what exactly is it I'm looking for? Let's start with the requirements.
-* I want a device I can plug into AC outlets on my front and back porch so I don't have to constantly toss CR2032 coin cells in the bin.
+* I want a device I can plug into AC outlets on my front and back porch so I don't have to constantly toss CR2032 coin cells at it.
 * I want it to be cheap in case it gets chewed on by squirrels, run over by a lawn mower, or pooped on by birds.
 * I don't want my WiFi credentials on it in case it gets stolen by a roving gang of juvenile hacker wannabes.
 * I want to be able to outfit it with sensors that will stand up to the extremes of Wisconsin winters.
