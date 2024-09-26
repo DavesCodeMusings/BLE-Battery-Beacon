@@ -83,9 +83,9 @@ But ESPHome is still configured to send mock data of 100% all the time, so Home 
 
 It did not take long to realize I've made things difficult by storing the battery level as a human readable string, "BATT:100%". On the ESP32 side, I have an integer value that I've converted to a nine-byte string. And now in the ESPHome configuration, I'm finding I need to parse the string to get back to the integer value expected by Home Assistant. I should have left it alone and just put it in _manufacturer data_ as an integer.
 
-And while I'm thinking about code changes, about half the lines in my C program are for dealing with client connections. Since a true beacon broadcasts it's data as part of the advertisement (and I've already determined Home Assistant does not deal well with the deep sleep disconnects when reading client data) there's really no need for my program to include code for client connections at all.
+And while I'm thinking about code changes, about half the lines in my C program are for dealing with client connections. Since a true beacon broadcasts it's data as part of the advertisement (and I've already determined Home Assistant does not deal well with the deep sleep disconnects when reading client data) there's really no need for my program to include logic for client connections at all.
 
-So in the end, my fourth try has told me it's time for a bit of clean-up.
+So in the end, my fourth try has told me it's time for a bit of code clean-up.
 
 ## Fifth Try (Acceptance)
 [proof_of_concept_5.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_5.ino) really streamlines the code. And, I can still monitor the fictious battery level with nRF Connect. It's just a descending hex value instead of a more human-friendly string. But, that makes my ESPHome lambda function simpler and the task of getting data to Home Assistant easier.
