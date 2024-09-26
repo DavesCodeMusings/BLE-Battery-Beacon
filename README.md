@@ -42,7 +42,7 @@ So far, so good.
 
 Then the deep sleep kicks in, and it all falls apart.
 
-The Arduino sketch in this first proof of concept is configured so that the ESP32 indiscriminantly goes into deep sleep after 60 seconds. If ESPHome is trying to read battery level at 59 seconds, too bad. It goes to sleep and disconnects ESPHome mid-request. If ESPHome tries to reconnect, the beacon is sleeping, so it never responds. ESPHome then sets the battery level to NaN (not a number.) Home Assistant interprets this as _unknown_. And since the beacon is configured to spend more time asleep than awake, it causes a lot of _unknown_ messages.
+The Arduino sketch in this first proof of concept is configured so that the ESP32 indiscriminantly goes into deep sleep after 60 seconds. If ESPHome is trying to read battery level at 59 seconds, too bad. It goes to sleep and disconnects ESPHome mid-request. If ESPHome tries to reconnect, the beacon is sleeping, so it never responds. ESPHome then sets the battery level to _NaN_ (not a number.) Home Assistant interprets this as _unknown_. And since the beacon is configured to spend more time asleep than awake, it causes a lot of _unknown_ messages.
 
 Interestingly, the Home Assistant _presence_ of the beacon remains contantly in a _Home_ state, rather than _Away_, even though the ESP32 is sleeping for the majority of the time.
 
