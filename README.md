@@ -36,7 +36,7 @@ The next project will probably be a vehicle presence detector using an ESP32 wit
 But first, the proof of concept battery indicator.
 
 ## First Try
-I created [proof_of_concept_1.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_1.ino) as an initial attempt to solve the problem by offering the battery level as a Bluetooth Low Energy (BLE) Generic Attribute (GATT) characteristic. ESPHome is configured using [esphome_config_1.yml](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/esphome_config_1.yml) to the device with Home Assistant. It works well when the beacon first boots up. ESPHome finds the beacon in its scans and reads the battery level (a fictitious 100% at this point). Home Assistant shows this battery level as an entity.
+I created [proof_of_concept_1.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_1.ino) as an initial attempt to solve the problem by offering the battery level as a Bluetooth Low Energy (BLE) Generic Attribute (GATT) characteristic. ESPHome is configured using [esphome_config_1.yml](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/esphome_config_1.yml) to link the device with Home Assistant. It works well when the beacon first boots up. ESPHome finds the beacon in its scans and reads the battery level (a fictitious 100% at this point). Home Assistant shows this battery level as an entity.
 
 So far, so good.
 
