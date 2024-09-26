@@ -74,7 +74,7 @@ void setup() {
   // Manufacturer Data field must include the company ID as the first two octets. Data follows.
   // It needs to be in little endian format, so 0x09A3, registered to Arduino SA is 0xA3, 0x09.
   // Company ID source: https://www.bluetooth.com/specifications/assigned-numbers/
-  // Below is the Arduino company ID followed by "BATT:100%" in ASCII.
+  // Below is the Arduino company ID followed by 0x64 (100 decimal) to indicate 100% battery.
   byte data[3] = { 0xA3, 0x09, 0x64};
   BLE.setManufacturerData(data, 3);
   BLE.advertise();
