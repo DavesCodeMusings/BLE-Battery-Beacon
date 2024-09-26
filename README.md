@@ -62,7 +62,7 @@ It's technically possible, but probably involves a lambda function to dig into s
 ## Third Try (Bargaining)
 In looking for examples of sending sensor readings in the beacon's BLE advertisement, I stumbled upon the specification for [the format used by BTHome](https://bthome.io/format/). This project has already laid out their way of sending measurements in a BLE advertisement. So rather than creating my own, or trying to reverse-engineer some proprietary format like what's used by Xaiomi, I'll re-write my sketch to conform to BTHome's data format.
 
-It looks like the BTHome data format can be done using the funtions provided by the Arduino library, though I have yet to find any example code for that. But, as the band Panic at the Disco says, "I've got high hopes!"
+It looks like the BTHome data format can be done using the funtions provided by the Arduino library, though I have yet to find any example code for that. But, as Brendon Urie of the band Panic at the Disco is fond of saying, "I've got high hopes!"
 
 The advantage of this should be easy integration with ESPHome and Home Assistant. My Xaiomi Mijia devices are already flashed with a 3rd party firmware that uses BTHome (at least that's how they show up in Home Assistant.) And they _just work_. No lambda functions, etc. I'm hoping to have the same results when I'm done.
 
