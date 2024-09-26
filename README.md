@@ -47,7 +47,7 @@ The Arduino sketch in this first proof of concept is configured so that the ESP3
 Interestingly, the Home Assistant _presence_ of the beacon remains contantly in a _Home_ state, rather than _Away_, even though the ESP32 is sleeping for the majority of the time.
 
 ## Second Try
-[proof_of_concept_2.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_2.ino) is an attempt to fix the problem of the battery constantly showing _unknown_.
+The changes in [proof_of_concept_2.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_2.ino) are an attempt to fix the problem of the battery constantly showing _unknown_.
 
 I remember reading about how some battery-operated home automation devices will send sensor readings in their BLE advertising messages. (I think it was a write-up concerning the stock firmware on the Xaiomi Mijia temperature / humidity sensors I have.) And, the BLE advertisement is what ESPHome was using for presence detection. This was the one entity in Home Asistant that was not showing _unknown_ when the beacon went to sleep.
 
