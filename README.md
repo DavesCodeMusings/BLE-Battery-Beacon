@@ -31,7 +31,7 @@ The battery level beacon is a proof of concept. At this point, there's not even 
 ## What's Next?
 First in my plans is an outdoor temperature & humidity sensor. There are easily accessible outdoor outlets on my front and back porch, but the real test will be how well the power adapters hold up to the temperature extremes. (The ESP32 itself is rated for -40C to +125C, so no problems there.) There's also the task of designing a suitable 3D printed enclosure: something that won't trap heat, but still keeps the rain and snow off the electronics.
 
-The next project will probably be a vehicle presence detector using an ESP32 with a rechargable Lithium Polymer battery plugged into the car's USB outlet. The LiPo battery will charge when the car is running, but how long will it last if the car is parked? How will it hold up in the summer heat and winter cold?
+The next project will probably be a vehicle presence detector using an ESP32 with a rechargable Lithium Polymer battery plugged into the car's USB outlet. The LiPo battery will charge when the car is running, but how long will it last if the car is parked? How will everything hold up in the summer heat and winter cold?
 
 But first, the proof of concept battery indicator.
 
