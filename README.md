@@ -81,8 +81,8 @@ With [proof_of_concept_4.ino](https://github.com/DavesCodeMusings/BLE-Battery-Be
 
 But ESPHome is still configured to send mock data of 100% all the time, so Home Assistant still reports 100%. My next task is to decode the data from the ESP32 beacon's advertisement and use it to update the Home Assistant entity.
 
-It did not take long to realize I've made things difficult by storing the battery level as a human readable string, "BATT:100%". On the ESP32 side, I have a one-byte value that I convert to a nine-byte string. And now in the ESPHome configuration, I'm finding I need to parse the string to get the one-byte value expected by Home Assistant. I should have left it alone and put it in _manufacturer data_ as a single byte.
+It did not take long to realize I've made things difficult by storing the battery level as a human readable string, "BATT:100%". On the ESP32 side, I have an integer value that I've converted to a nine-byte string. And now in the ESPHome configuration, I'm finding I need to parse the string to get back to the integer value expected by Home Assistant. I should have left it alone and just put it in _manufacturer data_ as an integer.
 
-And while I'm thinking about code changes, about half the lines in my C program are for dealing with client connections. Since a true beacon broadcasts it's data as part of the advertisement, and I've already determined Home Assistant does not deal well with the deep sleep disconnects, there's no need for my program to include code for client connections at all.
+And while I'm thinking about code changes, about half the lines in my C program are for dealing with client connections. Since a true beacon broadcasts it's data as part of the advertisement (and I've already determined Home Assistant does not deal well with the deep sleep disconnects when reading client data) there's really no need for my program to include code for client connections at all.
 
 So in the end, my fourth try is a bit of clean-up.
