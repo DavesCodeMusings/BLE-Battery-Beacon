@@ -49,7 +49,7 @@ Interestingly, the Home Assistant _presence_ of the beacon remains contantly in 
 ## Second Try
 The changes in [proof_of_concept_2.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_2.ino) are an attempt to fix the problem of the battery constantly showing _unknown_.
 
-I remember reading about how some battery-operated home automation devices will send sensor readings in their BLE advertising messages. (I think it was a write-up concerning the stock firmware on the Xaiomi Mijia temperature / humidity sensors I have.) And, the BLE advertisement is what ESPHome was using for presence detection. This was the one entity in Home Asistant that was not showing _unknown_ when the beacon went to sleep.
+I remember reading about how some battery-operated home automation devices will send sensor readings in their BLE advertising messages. (I think it was a write-up concerning the stock firmware on the Xaiomi Mijia temperature / humidity sensors I have.) And, the BLE advertisement is what ESPHome was using for presence detection. Presence was the one entity in Home Asistant that was not showing _unknown_ when the beacon went to sleep.
 
 This led me to looking for a way to communicate battery level information in the BLE advertisement. And it turns out there is a field called _manufacturer data_ that device makers (like Xaiomi) will use to send temperature and humidity readings along with their BLE advertisements. Unfortunately, there's no standard way of doing it. But, Arduino's BLE library has a function for writing to this _manufacturer data_ field.
 
