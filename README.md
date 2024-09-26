@@ -70,7 +70,7 @@ Oops! That didn't work.
 
 Remember that scene in Star Wars when they're escaping the Death Star in the Millenium Falcon and Han says, "I sure hope the old man got that tractor beam out of commission or this is going to be a real short trip." Well guess what...?
 
-It turns out BTHome sends its sensor updates in the _service data_ part of the advertisement, not the _manufacturer data_. Maybe the stock Xiaomi firmware was doing this too. I don't know. Why does it matter? Because the Arduino BLE library can write to _manufacturer data_, but I could not find any functions that would write arbitrary _service data_. So it's back to ESPHome lambda functions.
+It turns out BTHome sends its sensor updates in the _service data_ part of the advertisement, not the _manufacturer data_. Maybe the stock Xiaomi firmware was doing this too. I don't know. Why does it matter? Because the Arduino BLE library can write to _manufacturer data_, but I could not find any functions that would let me write arbitrary _service data_. So it's back to ESPHome lambda functions.
 
 Fortunately, it's not too difficult to set up using the esp32_ble_tracker's [on_ble_manufacturer_data_advertise](https://esphome.io/components/esp32_ble_tracker.html#on-ble-manufacturer-data-advertise-trigger) trigger. I was able to pretty easily create an ESPHome configuration to send a mock value of 100% battery level to Home Assistant.
 
