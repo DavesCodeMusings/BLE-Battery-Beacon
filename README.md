@@ -123,7 +123,7 @@ Home Assistant is reporting the battery percentage as well. There's a little bit
 Best of all, I have yet to see any _unknown_ values for my battery level. When the ESP32 goes into deep sleep, Home Assistant continues to report the last battery percentage reported. I'm sure there's a timeout in there somewhere and, if no advertisements are seen for a long while, it may go into an _unknown_ state.
 
 ## Next  Steps
-In my requirements, I stated two use cases: 1) reading temperature and humidity from outdoors, and 2) presence detection for vehicles. Technically, this proof of concept provides presence detection, but the fictional battery level advertisement is just additional overhead. There's no temperature and humidity measurement, but it should be easy enough to wire up a DHT22 or BME280. The trick will be communicating the data.
+In my requirements, I stated two use cases: 1) reading temperature and humidity from outdoors, and 2) presence detection for vehicles. Technically, this proof of concept provides presence detection, but the blinking LEDs and fictional battery level advertisement is just additional overhead eating into battery life. There's no temperature and humidity measurement for the first use case, but it should be easy enough to wire up a DHT22 or BME280. The trick will be communicating the data.
 
 I can take the approach used by GATT characteristics and BTHome: an ID folowed by a value. Though looking at the [list of IDs in BTHome](https://github.com/Chreece/BTHomeV2-ESP32-example/blob/main/Arduino%20Code/BTHome.ino) there are quite a few I would never use. The [Bluetooth assigned numbers](https://www.bluetooth.com/specifications/assigned-numbers/) have even more.
 
