@@ -47,11 +47,11 @@ The Arduino sketch in this first proof of concept is configured so that the ESP3
 Interestingly, the Home Assistant _presence_ of the beacon remains contantly in a _Home_ state, rather than _Away_, even though the ESP32 is sleeping for the majority of the time.
 
 ## Second Try
-The changes in [proof_of_concept_2.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_2.ino) are an attempt to fix the problem of the battery constantly showing _unknown_.
+The changes in [proof_of_concept_2.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_2.ino) are my attempt to fix the problem of the battery constantly showing _unknown_.
 
-I remember reading about how some battery-operated home automation devices will send sensor readings in their BLE advertising messages. (I think it was a write-up concerning the stock firmware on the Xaiomi Mijia temperature / humidity sensors I have.) And, the BLE advertisement is what ESPHome was using for presence detection. Presence was the one entity in Home Asistant that was not showing _unknown_ when the beacon went to sleep.
+I remember reading about how some battery-operated home automation devices will often send sensor readings in their BLE advertising messages. (I think it was a write-up concerning the stock firmware on the Xaiomi Mijia temperature / humidity sensors I have.) And, the BLE advertisement is what ESPHome was using for presence detection. Presence was the one entity in Home Asistant that was not showing _unknown_ when the beacon went to sleep.
 
-This led me to looking for a way to communicate battery level information in the BLE advertisement. And it turns out there is a field called _manufacturer data_ that device makers (like Xaiomi) will use to send temperature and humidity readings along with their BLE advertisements. Unfortunately, there's no standard way of doing it. But, Arduino's BLE library has a function for writing to this _manufacturer data_ field.
+This led me to looking for a way to communicate battery level information in the BLE advertisement. And it turns out there is a field called _manufacturer data_ that device makers (like Xaiomi) will use to send temperature and humidity readings along with their BLE advertisements. Unfortunately, there's no standard way of doing it. But, Arduino's BLE library includes the function `BLE.setManufacturerData()`for writing to this _manufacturer data_ field.
 
 So in proof_of_concept_2.ino, I've created a string of ASCII characters that spells out _BATT:100%_ and stuck it in the manufacturer data field. Using a [BLE scanner](https://play.google.com/store/search?q=nrf+connect&c=apps) on my phone, I can see the advertisement from my ESP32 beacon. And if I switch it to a text representation of the manufacturer data, I see _BATT:100%_. Problem solved! Right...?
 
