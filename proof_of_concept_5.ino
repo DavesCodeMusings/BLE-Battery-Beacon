@@ -91,7 +91,7 @@ void setup() {
 }
 
 void loop() {
-  delay(100);  // Throttle updates, balancing reponsiveness vs. CPU usage.
+  delay(100);  // Throttle updates, balancing responsiveness vs. CPU usage.
   byte data[3] = { 0xA3, 0x09, (byte) battery};
   BLE.stopAdvertise();  // Need to re-advertise new data, so stop, update, and start.
   BLE.setManufacturerData(data, 3);
