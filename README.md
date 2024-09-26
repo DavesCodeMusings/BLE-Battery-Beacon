@@ -35,7 +35,7 @@ The next project will probably be a vehicle presence detector using an ESP32 wit
 
 But first, the proof of concept battery indicator.
 
-## First Try
+## First Try (Denial)
 I created [proof_of_concept_1.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_1.ino) as an initial attempt to solve the problem by offering the battery level as a Bluetooth Low Energy (BLE) Generic Attribute (GATT) characteristic. ESPHome is configured using [esphome_config_1.yml](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/esphome_config_1.yml) to link the device with Home Assistant. It works well when the beacon first boots up. ESPHome finds the beacon in its scans and reads the battery level (a fictitious 100% at this stage). Home Assistant shows this battery level as an entity.
 
 So far, so good.
@@ -46,7 +46,7 @@ The Arduino sketch in this first proof of concept is configured so that the ESP3
 
 Interestingly, the Home Assistant _presence_ of the beacon remains contantly in a _Home_ state, rather than _Away_, even though the ESP32 is sleeping for the majority of the time.
 
-## Second Try
+## Second Try (Anger)
 The changes in [proof_of_concept_2.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_2.ino) are my attempt to fix the problem of the battery constantly showing _unknown_.
 
 I remember reading about how some battery-operated home automation devices will often send sensor readings in their BLE advertising messages. (I think it was a write-up concerning the stock firmware on the Xaiomi Mijia temperature / humidity sensors I have.) And, the BLE advertisement is what ESPHome was using for presence detection. Presence was the one entity in Home Asistant that was not showing _unknown_ when the beacon went to sleep.
@@ -59,7 +59,7 @@ Maybe not. How can I read this from ESPHome to send to Home Assistant as an enti
 
 It's technically possible, but probably involves a lambda function to dig into some debug info. In short, it's not the simple solution I was hoping for.
 
-## Third Try
+## Third Try (Bargaining)
 In looking for examples of sending sensor readings in the beacon's BLE advertisement, I stumbled upon the specification for [the format used by BTHome](https://bthome.io/format/). This project has already laid out their way of sending measurements in a BLE advertisement. So rather than creating my own, or trying to reverse-engineer some proprietary format like what's used by Xaiomi, I'll re-write my sketch to conform to BTHome's data format.
 
 It looks like the BTHome data format can be done using the funtions provided by the Arduino library, though I have yet to find any example code for that. But, as the band Panic at the Disco says, "I've got high hopes!"
@@ -76,7 +76,7 @@ Fortunately, it's not too difficult to set up using the esp32_ble_tracker's [on_
 
 [esphome_config_3.yml](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/esphome_config_3.yml) contains this configuration.
 
-## Fourth Try
+## Fourth Try (Depression)
 With [proof_of_concept_4.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_4.ino), I created a battery variable that is decremented once a second by the timer interrupt. This is to simulate a draining battery instead of the constant 100% I was sending before. I also changed it to dynamically update the _manufacturer data_ part of the advertisement. And best of all, the changing battery percentage is showing up in nRF Connect just like I expected.
 
 But ESPHome is still configured to send mock data of 100% all the time, so Home Assistant still reports 100%. My next task is to decode the data from the ESP32 beacon's advertisement and use it to update the Home Assistant entity.
@@ -87,7 +87,7 @@ And while I'm thinking about code changes, about half the lines in my C program 
 
 So in the end, my fourth try has told me it's time for a bit of clean-up.
 
-## Fifth Try
+## Fifth Try (Acceptance)
 [proof_of_concept_5.ino](https://github.com/DavesCodeMusings/BLE-Battery-Beacon/blob/main/proof_of_concept_5.ino) really streamlines the code. And, I can still monitor the fictious battery level with nRF Connect. It's just a descending hex value instead of a more human-friendly string. But, that makes my ESPHome lambda function simpler and the task of getting data to Home Assistant easier.
 
 The lambda function went from this mock-up...
